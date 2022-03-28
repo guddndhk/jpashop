@@ -1,6 +1,7 @@
 package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,11 +9,12 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor // MemberService 참조 또한 @PersistenceContext 없어도 스프링데이터JPA 오토와이어드로 지원해준다.
 public class MemberRepository {
 
     // JPA 표준 어노테이션
-    @PersistenceContext
-    private EntityManager em;
+//    @PersistenceContext
+    private final EntityManager em;
 
     public void save(Member member) {
         em.persist(member);

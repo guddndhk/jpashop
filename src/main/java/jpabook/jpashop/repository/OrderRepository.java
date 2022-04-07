@@ -18,10 +18,18 @@ public class OrderRepository {
     }
 
     public Order findOne(Long id) {
-        return em.find(Order.class,id);
+        return em.find(Order.class, id);
     }
 
-//    public List<Order> findAll(OrderSearh orderSearh) {
-//
-//    }
+    public List<Order> findAll(OrderSearch orderSearch) {
+
+        //JPQL
+        return em.createQuery("SELECT o FROM Order o JOIN o.member m " +
+                        "WHERE o.status =:status " +
+                        "and m.name like :name", Order.class)
+                .setParameter("status", orderSearch.getOrderStatus())
+                .setParameter("name", orderSearch.getMemberName())
+                .setMaxResults(1000)// 최대 1000건
+                .getResultList();
+    }
 }
